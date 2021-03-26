@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request, redirect
 
 app = Flask(__name__)
 articles = [
@@ -30,9 +30,27 @@ def get_article(id):
     abort(404)
 
 
-@app.route('/create/article')
+@app.route('/create/article', methods=['GET', 'POST'])
 def create_article():
-    pass
+    """
+    Request methods:
+        1) GET - Отвечает за получение данных
+        2) POST - Отвечает за создание данных
+        3) PUT - Отвечает за обновление данных
+        4) DELETE - Отвечает за удаление данных
+    """
+    if request.method == 'GET':
+        return render_template('create_article.html')
+    elif request.method == 'POST':
+        articles.append({
+            'id': len(articles) + 1,
+            'author': request.form['article_author'],
+            'title': request.form['article_title'],
+            'text': request.form['article_text'],
+        })
+        return redirect('/')
+    else:
+        return 'METHOD NOT ALLOWED'
 
 
 data = """
