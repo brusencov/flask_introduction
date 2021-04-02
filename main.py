@@ -149,6 +149,13 @@ def get_user(id):
     abort(418)
 
 
+@app.route('/delete/user/<int:id>', methods=['GET'])
+def delete_user(id):
+    global users
+    users = list(filter(lambda x: x['id'] != id, users))
+    return 'success'
+
+
 if __name__ == '__main__':
     app.run(host='localhost', port=5000)
 
