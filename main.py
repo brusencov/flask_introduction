@@ -2,9 +2,13 @@ from flask import Flask, render_template, abort, request, redirect
 import random
 import string
 import os
+from user_controller import UserController
 
 
 app = Flask(__name__)
+
+app.secret_key = 'asdasdasdasd'
+
 BASE_IMG_PATH = 'static/images/pic01.jpg'
 articles = [
     {
@@ -158,14 +162,6 @@ def delete_user(id):
 
 
 if __name__ == '__main__':
+    user = UserController(app)
     app.run(host='localhost', port=5000)
 
-
-"""
-Задание 1:
- - Создать базовую страницу для форм (Создание/редактирование пользователя/статьи)
- - Применив шаблонизатор унаследовать страницы (Создание/редактирование пользователя/статьи) от базовой страницы для форм
-Задание 2:
- - Создать единый шаблон для отображения данных в табличном виде.
- - Применить шаблон для отображения данных в табличном виде для страниц отображения всех пользователей/статей 
-"""

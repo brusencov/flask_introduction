@@ -4,20 +4,18 @@ import json
 
 class User(object):
 
-    def __init__(self, username: str, email, phone, password, avatar):
+    def __init__(self, id, email, password, username=None, **kwargs):
+        self.id = id
         self.username = username
         self.email = email
-        self.phone = phone
         self.password = password
-        self.avatar = avatar
 
     def __dict__(self):
         return {
+            'id': self.id,
             'username': self.username,
             'email': self.email,
-            'phone': self.phone,
-            'password': self.password,
-            'avatar': self.avatar
+            'password': self.password
         }
 
     @property
@@ -37,28 +35,12 @@ class User(object):
         self._email = value
 
     @property
-    def phone(self):
-        return self._phone
-
-    @phone.setter
-    def phone(self, value):
-        self._phone = value
-
-    @property
     def password(self):
         return self._password
 
     @password.setter
     def password(self, value):
         self._password = value
-
-    @property
-    def avatar(self):
-        return self._avatar
-
-    @avatar.setter
-    def avatar(self, value):
-        self._avatar = value
 
 
 class Users:
@@ -67,9 +49,16 @@ class Users:
         self.users = []
         self._file_path = file_path
         self.load()
+        print(f'Загружены пользователи: {self.users}')
 
     def add_user(self, user: User):
+        if len([x for x in self.users if user.email == x.email]) > 0:
+            return False
         self.users.append(user)
+        return True
+
+    def get_last_id(self):
+        return len(self.users)
 
     def save(self):
         f = open(self._file_path, 'w')
@@ -89,9 +78,3 @@ class Users:
 
     def __del__(self):
         self.save()
-
-
-# users = Users('data.json')
-# users.add_user(User(123,123,123,123,123))
-# users.save()
-

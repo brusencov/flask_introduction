@@ -23,6 +23,12 @@
 				</ul>
 			</nav>
 
+		{% if 'email' in session %}
+		{{ session['email'] }}
+		{% else %}
+		<a href="/register">Зарегистрироваться</a>
+		{% endif %}
+
         {% block content %}{% endblock %}
 
 		<!-- Footer -->
