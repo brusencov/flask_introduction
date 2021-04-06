@@ -1,14 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create article</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block content %}
 <form method="post" enctype="multipart/form-data" action="/create/article">
     <input name="article_author" placeholder="Article author" type="text">
     <input name="article_title" placeholder="Article Title" type="text">
@@ -17,6 +9,4 @@
 
     <button>Создать статью</button>
 </form>
-
-</body>
-</html>
+{% endblock %}
