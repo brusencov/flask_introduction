@@ -20,14 +20,15 @@
 					<li><a href="/">Главная</a></li>
 					<li><a href="/create/article">Создать статью</a></li>
 					<li><a href="/create/user">Создать пользователя</a></li>
+					<li>
+						{% if 'email' in session %}
+							<a href="#">{{ session['email'] }}</a>
+						{% else %}
+							<a href="/register">Зарегистрироваться</a>
+						{% endif %}
+					</li>
 				</ul>
 			</nav>
-
-		{% if 'email' in session %}
-		{{ session['email'] }}
-		{% else %}
-		<a href="/register">Зарегистрироваться</a>
-		{% endif %}
 
         {% block content %}{% endblock %}
 
