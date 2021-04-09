@@ -8,11 +8,11 @@
 
 {% for user in users %}
     <div class="user-block">
-        <img src="/{{ user['avatar'] }}" alt="">
-        <p>{{ user['username'] }}</p>
-        <p>{{ user['email'] }}</p>
-        <p>{{ user['phone'] }}</p>
-        <a href="/user/{{ user['id'] }}">Посмотреть пользователя</a>
+        <img src="/{{ user.avatar }}" alt="">
+        <p>{{ user.username }}</p>
+        <p>{{ user.email }}</p>
+        <p>{{ user.phone }}</p>
+        <a href="/user/{{ user.id }}">Посмотреть пользователя</a>
     </div>
 {% endfor %}
 

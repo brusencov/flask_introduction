@@ -65,13 +65,13 @@
 						</div>
 						<div class="content">
 							<header class="align-center">
-								<p>{{ article['author'] }}</p>
-								<h2>{{ article['title'] }}</h2>
+								<p>{{ article.author }}</p>
+								<h2>{{ article.title }}</h2>
 							</header>
-							<span class="view-count">Количество просмотров: {{ article['views_count'] }}</span>
-							<p>{{ article['text'][:140] }}...</p>
+							<span class="view-count">Количество просмотров: {{ article.views_count }}</span>
+							<p>{{ article.text[:140] }}...</p>
 							<footer class="align-center">
-								<a href="/article/{{ article['id'] }}" class="button alt">Read More</a>
+								<a href="/article/{{ article.id }}" class="button alt">Read More</a>
 							</footer>
 						</div>
 					</div>

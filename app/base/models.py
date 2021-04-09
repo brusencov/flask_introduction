@@ -16,7 +16,11 @@ class BaseModel:
         if not validation(self.items):
             return False
         self.items.append(item)
+        self.save()
         return True
+
+    def remove(self, id: int):
+        self.items = list(filter(lambda x: x.id != id, self.items))
 
     def get_last_id(self):
         return len(self.items)

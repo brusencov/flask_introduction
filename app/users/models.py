@@ -3,12 +3,19 @@ import json
 from app.base.models import BaseModel
 
 
+class UserRole:
+    ADMIN = '2'
+    USER = '1'
+    GUEST = '0'
+
+
 class User(object):
 
-    def __init__(self, id, email, password, username=None, **kwargs):
+    def __init__(self, id, email, password, role=UserRole.GUEST, username=None, **kwargs):
         self.id = id
         self.username = username
         self.email = email
+        self.role = role
         self.password = password
 
     def __dict__(self):
@@ -16,6 +23,7 @@ class User(object):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'role': self.role,
             'password': self.password
         }
 
