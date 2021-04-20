@@ -6,13 +6,13 @@ from app.users.models import User, Users
 
 
 class UserController:
-
-    def get_one_user(self, id: int):
-        return next(iter(filter(lambda x: x.id == id, self.users.items)))
+    #
+    # def get_one_user(self, id: int):
+    #     return next(iter(filter(lambda x: x.id == id, self.users.items)))
 
     def __init__(self, app):
         self.app = app
-        self.users = Users('database/users.json', User)
+        self.users = Users()
 
         @app.route('/register', methods=['GET'])
         def register_view():
@@ -29,19 +29,13 @@ class UserController:
             if not self.register_validate(request.form):
                 print('Валидация не пройдена')
                 return redirect('/register')
-            user_id = self.users.get_last_id() + 1
-            is_created = self.users.push(
+            print(request.form)
+            user = self.users.create_user(
                 User(
-                    id=user_id,
                     **request.form
-                ),
-                lambda i: not len([x for x in i if request.form.get('email') == x.email]) > 0
+                )
             )
-            if not is_created:
-                print('Такой юзер уже есть')
-                return redirect('/register')
-            self.users.save()
-            session['id'] = user_id
+            session['id'] = user
             session['email'] = request.form.get('email')
             session['role'] = request.form.get('role')
             return redirect('/')
@@ -62,14 +56,12 @@ class UserController:
                     else:
                         img_path = 'static/images/default_avatar.jpg'
                     user = {
-                        'id': self.users.get_last_id(),
                         'username': request.form['username'],
                         'email': request.form['email'],
                         'phone': request.form['phone'],
-                        'password': request.form['password'],
-                        'avatar': img_path
+                        'password': request.form['password']
                     }
-                    self.users.push(User(**user))
+                    self.users.create_user(User(**user))
                     return redirect('/')
                 except Exception as e:
                     print(e)
@@ -79,11 +71,11 @@ class UserController:
 
         @app.route('/users', methods=['GET'])
         def get_users():
-            return render_template('users.html', users=self.users.items)
+            return render_template('users.html', users=self.users.get_all_users())
 
         @app.route('/user/<int:id>', methods=['GET'])
         def get_user(id):
-            user = self.get_one_user(id)
+            user = self.users.find_one(id)
             if user is None:
                 abort(404)
             return render_template('user.html', user=user)
