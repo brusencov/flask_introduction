@@ -14,6 +14,7 @@ class ArticleController:
 
         @app.route('/article/<int:id>')
         def get_article(id):
+            # @TODO Добавить в модели Articles возможность получить одну статью по ид из БД
             article = self.get_one_article(id)
             if article is None:
                 abort(404)
@@ -35,6 +36,7 @@ class ArticleController:
                     'views_count': 0,
                     'text': request.form['article_text'],
                 })
+                # @TODO Добавить в модель Articles функцию create_articles - которая будет добавлять в базу новую статью
                 article.save_image(request.files['article_image'])
                 self.articles.push(article)
                 return redirect('/')
@@ -45,6 +47,7 @@ class ArticleController:
         def update_article(id):
             if not session['role'] >= '1':
                 abort(403)
+            # @TODO Добавить функцию в модель Articles которая будет обновлять статью по ид
             article = self.get_one_article(id)
             if article is None:
                 abort(404)

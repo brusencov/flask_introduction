@@ -10,7 +10,7 @@ class Article(object):
 
     BASE_IMAGE_PATH = 'static/images/pic01.jpg'
 
-    def __init__(self, id: int, author: str, views_count: int, title: str, text: str, img=BASE_IMAGE_PATH, **kwargs):
+    def __init__(self, author: str, views_count: int, title: str, text: str, id: int = None, img=BASE_IMAGE_PATH, **kwargs):
         self.id = id
         self.author = author
         self.views_count = views_count
